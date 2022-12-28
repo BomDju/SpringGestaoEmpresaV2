@@ -15,6 +15,7 @@ public class Setor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String nome;
 	
 	@OneToMany(mappedBy = "setor")
 	private List <Funcionario> funcionario;
@@ -35,6 +36,6 @@ public class Setor {
 		this.nome = nome;
 	}
 
-	private String nome;
+	
 
 }

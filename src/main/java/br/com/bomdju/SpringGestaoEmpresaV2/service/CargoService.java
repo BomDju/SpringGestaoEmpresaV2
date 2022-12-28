@@ -10,26 +10,25 @@ public class CargoService {
 	@Autowired
 	private CargoRepository cargoRepository;
 
+	// Fazer tratamento de exeçao no caso do id inserido não existir ;)
+
 	public Cargo findById(Integer id) {
 		Cargo cargo = cargoRepository.findById(id).get();
 		return cargo;
 	}
-	
+
 	public void deletById(Integer id) {
 		cargoRepository.deleteById(id);
 	}
-	
-	public Cargo save(String descricao) {
+
+	public void save(String descricao) {
 		Cargo cargo = new Cargo();
 		cargo.setDescricao(descricao);
 		cargoRepository.save(cargo);
-		return cargo;
+
 	}
-	
-	public Cargo upadate(Integer id, String descricao) {
-		Cargo cargo = cargoRepository.findById(id).get();
-		cargo.setDescricao(descricao);
-		return cargo;
+
+	public void upadateCargo(Integer id, String descricao) {
+		cargoRepository.updadeByid(descricao, id);
 	}
 }
-	
