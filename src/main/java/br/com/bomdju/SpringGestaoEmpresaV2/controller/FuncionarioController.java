@@ -27,7 +27,7 @@ public class FuncionarioController {
 
 	@GetMapping("/homeFuncionario")
 	public String homeFuncionario(Model model) {
-		List<Funcionario> funcionarios = service.findAllFuncionarios();
+		List<Funcionario> funcionarios = service.findAllFuncionariosAtivo();
 		model.addAttribute("funcionarios", funcionarios);
 		return "funcionario/homeFuncionario";
 	}
@@ -42,31 +42,38 @@ public class FuncionarioController {
 		service.save(dto);
 		return homeFuncionario(model);
 	}
-	
+
 	@PostMapping("/buscaFuncionario")
 	public String buscaFuncionario(FuncionarioDto dto, Model model) {
-		Funcionario funcionarios = service.findById(dto); 
+		Funcionario funcionarios = service.findById(dto);
 		model.addAttribute("funcionarios", funcionarios);
 		return "funcionario/homeFuncionario";
 	}
-	
-	@GetMapping(value= "/deletarFuncionario/{id}")
+
+	@GetMapping(value = "/deletarFuncionario/{id}")
 	public String deletarFuncionario(FuncionarioDto dto, Model model) {
-		service.deletById(dto);
+		service.setaAtivoFalse(dto);
 		return homeFuncionario(model);
 	}
-	
+
 	@GetMapping("/formularioAtualizarFuncionario/{id}")
 	public String formularioatualizarFuncionario(FuncionarioDto dto, Model model) {
 		Funcionario funcionario = service.findById(dto);
 		model.addAttribute("funcionario", funcionario);
 		return "funcionario/formularioAtualizarFuncionario";
 	}
-	
+
 	@PostMapping("/atualizarFuncionario")
 	public String atualizarFuncionario(FuncionarioDto dto, Model model) {
-		service.upadate(dto);
+		service.salveComBusca(dto);
 		return homeFuncionario(model);
 	}
-		
+
+	@GetMapping("/vizualizarFuncionario/{id}")
+	public String vizualizarFuncionario(FuncionarioDto dto, Model model) {
+		Funcionario funcionario = service.findById(dto);
+		model.addAttribute("funcionario", funcionario);
+		return "funcionario/vizualizarFuncionario";
+	}
+
 }

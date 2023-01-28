@@ -22,7 +22,7 @@
 
 		<div class="container col-md-1 align-middle mt-4 pt-5">
 			<a class="bi bi-person-plus btn btn-outline-primary btn-lg"
-				href="formularioFuncionario"> Novo cadastro</a>
+				href="/funcionario/formularioFuncionario"> Novo cadastro</a>
 		</div>
 
 		<div class="container col-md-11">
@@ -33,15 +33,15 @@
 					<div class="collapse navbar-collapse" id="navbarSupportedContent">
 						<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 							<li class="nav-item"><a class="nav-link active h1"
-								href="homeFuncionario">Funcionario</a></li>
+								href="/funcionario/homeFuncionario">Funcionario</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="/cargo/homeCargo">Cargo</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="/setor/homeSetor">Setor</a></li>
 						</ul>
-						<form class="d-flex" role="search">
-							<input class="form-control me-2" type="search"
-								placeholder="Buscar por Id" aria-label="Search">
+						<form class="d-flex" action="buscaFuncionario" method="post">
+							<input name="id" class="form-control me-2"
+								placeholder="Buscar por Id" type="number">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
 					</div>
@@ -65,58 +65,59 @@
 					</tr>
 				</thead>
 				<tbody>
-				
-					<tr th:if="${funcionarios.isEmpty()}">Não a funcionarios
-						cadastrados!!
-					</tr>
-					<tr class="align-middle" th:each="funcionario : ${funcionarios}">
 
-						<td scope="row" th:text="${funcionario.id}">1</td>
+
+					<tr class="align-middle" th:each="funcionario : ${funcionarios}">
+						<td scope="row" th:text="${funcionario.id}"></td>
 						<td scope="col" th:text="${funcionario.nomeDoFuncionario}">Nome</td>
 						<td scope="col" th:text="${funcionario.cpf}">CPF</td>
 						<td scope="col" th:text="${funcionario.salario}">Salario</td>
-						<td scope="col">data</td>
-						<td scope="col">ad</td>
-						<td scope="col"></td>
-						<td scope="col" th:text="${funcionario.ativo}">ad</td>
-						<td scope="col"><a
+						<td scope="col" th:text="${funcionario.data}"></td>
+						<td scope="col" th:text="${funcionario.Cargo}"></td>
+						<td scope="col" th:text="${funcionario.Setor}"></td>
+						<td scope="col" th:text="${funcionario.ativo}"></td>
+						<td scope="col">
+						  <a
 							class="bi bi-pencil-square btn btn-outline-primary btn-sm"
-							href="/funcionario/formulario"> Atualizar</a> <a
-							class="btn btn-outline-success btn-sm bi bi-eye " role="button"
-							href="/funcionario/visualizarFuncionario"> Visualizar</a>
+							th:href="@{'/funcionario/formularioAtualizarFuncionario/' + ${funcionario.id}}">
+							 Atualizar</a> 
+								
+						  <a class="btn btn-outline-success btn-sm bi bi-eye"
+							th:href="@{'/funcionario/vizualizarFuncionario/' + ${funcionario.id}}"
+							> Visualizar</a>
+							
+						  <a name="id"
+							class="bi bi-trash btn btn-outline-danger btn-sm"
+							data-bs-toggle="modal" data-bs-target="#deletModal"> Deletar</a>
 
-							<button class="bi bi-trash btn btn-outline-danger btn-sm"
-								data-bs-toggle="modal" data-bs-target="#deletModal">
-								 Deletar</button>
+
+
+							<!-- Modal -->
+							<div class="modal fade" id="deletModal" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h1 class="modal-title fs-5">Deletar funcionario?</h1>
+											<button type="button" class="btn-close"
+												data-bs-dismiss="modal" aria-label="Close"></button>
+										</div>
+										<div class="modal-body">Você tem certeza que deseja
+											deletar esse funcionario?</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-outline-secondary"
+												data-bs-dismiss="modal">Cancelar</button>
+											<a
+												th:href="@{'/funcionario/deletarFuncionario/' + ${funcionario.id}}"
+												nome="id" type="button" class="btn btn-outline-danger">Deletar</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
 					</tr>
-
 				</tbody>
-				</form>
 			</table>
-
-			<!-- Modal -->
-			<div class="modal fade" id="deletModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">Deletar
-								funcionario?</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">
-							Você tem certeza que deseja deletar esse funcionario?
-							<div></div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-secondary"
-								data-bs-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-outline-danger">Deletar</button>
-						</div>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </body>

@@ -1,10 +1,12 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 import br.com.bomdju.SpringGestaoEmpresaV2.repository.CargoRepository;
 
+@Service
 public class CargoService {
 
 	@Autowired
@@ -29,6 +31,9 @@ public class CargoService {
 	}
 
 	public void upadateCargo(Integer id, String descricao) {
-		cargoRepository.updadeByid(descricao, id);
+		Cargo c = cargoRepository.findById(id).get();
+		c.setDescricao(descricao);
+		cargoRepository.save(c);
 	}
+	
 }
