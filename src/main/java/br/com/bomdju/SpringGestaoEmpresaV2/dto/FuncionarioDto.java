@@ -11,7 +11,7 @@ public class FuncionarioDto {
 	private Integer id;
 	private String nomeDoFuncionario;
 	private String cpf;
-	private String salario;
+	private Double salario;
 	private LocalDate data;
 	private Integer cargoId;
 	private Integer setorId;
@@ -28,7 +28,7 @@ public class FuncionarioDto {
 		return cpf;
 	}
 
-	public String getSalario() {
+	public Double getSalario() {
 		return salario;
 	}
 
@@ -56,7 +56,7 @@ public class FuncionarioDto {
 		this.cpf = cpf;
 	}
 
-	public void setSalario(String salario) {
+	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
 

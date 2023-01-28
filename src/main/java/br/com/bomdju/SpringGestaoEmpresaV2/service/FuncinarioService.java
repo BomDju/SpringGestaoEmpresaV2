@@ -22,7 +22,8 @@ public class FuncinarioService {
 	private SetorRepository setorRepository;
 
 	// Fazer tratamento de exeçao no caso do id inserido não existir ;)
-
+	//O setor e cargo estão comentados pra evitar erro, ainda n fiz o Crud do cargo nem do setor
+	
 	public Funcionario findById(FuncionarioDto dto) {
 		Funcionario funcionario = funcionarioRepository.findById(dto.getId()).get();
 		return funcionario;
@@ -37,10 +38,10 @@ public class FuncinarioService {
 		Funcionario f = new Funcionario();
 		f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
 		f.setCpf(dto.getCpf());
-		f.setSalario(Double.valueOf(dto.getSalario()));
+		f.setSalario(dto.getSalario());
 		f.setData(dto.getData());
-		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
-		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
+		//f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
+		//f.setSetor(setorRepository.findById(dto.getSetorId()).get());
  		funcionarioRepository.save(f);
 		return dto;
 	}
@@ -51,10 +52,10 @@ public class FuncinarioService {
 
 		f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
 		f.setData(dto.getData());
-		f.setSalario(Double.valueOf(dto.getSalario()));
+		f.setSalario(dto.getSalario());
 		f.setCpf(dto.getCpf());
-		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
-		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
+		//f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
+		//f.setSetor(setorRepository.findById(dto.getSetorId()).get());
 		funcionarioRepository.save(f);
 	}
 	

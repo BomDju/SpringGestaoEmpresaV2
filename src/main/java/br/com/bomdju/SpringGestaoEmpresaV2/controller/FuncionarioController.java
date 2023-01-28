@@ -26,34 +26,47 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/homeFuncionario")
-	public String funcionarioHome(Model model) {
+	public String homeFuncionario(Model model) {
 		List<Funcionario> funcionarios = service.findAllFuncionarios();
 		model.addAttribute("funcionarios", funcionarios);
 		return "funcionario/homeFuncionario";
 	}
 
 	@GetMapping("/visualizarFuncionario")
-	public String funcionarioVizualizar() {
+	public String vizualizarFuncionario() {
 		return "funcionario/visualizarFuncionario";
 	}
 
 	@PostMapping("/cadastrarFuncionario")
-	public String novoFuncionarioCadastrar(FuncionarioDto dto, Model model) {
+	public String cadastrarNovoFuncionario(FuncionarioDto dto, Model model) {
 		service.save(dto);
-		return funcionarioHome(model);
+		return homeFuncionario(model);
 	}
 	
 	@PostMapping("/buscaFuncionario")
-	public String funcionarioBusca(FuncionarioDto dto, Model model) {
+	public String buscaFuncionario(FuncionarioDto dto, Model model) {
 		Funcionario funcionarios = service.findById(dto); 
 		model.addAttribute("funcionarios", funcionarios);
 		return "funcionario/homeFuncionario";
 	}
 	
-//	@GetMapping("/deletarFuncionario")
-//	public String deletarFuncionario(FuncionarioDto dto) {
-//		service.deletById(dto);
-//		return "/homeFuncionario";
-//	}
-//		
+	@GetMapping(value= "/deletarFuncionario/{id}")
+	public String deletarFuncionario(FuncionarioDto dto, Model model) {
+		service.deletById(dto);
+		return homeFuncionario(model);
+	}
+	
+	@GetMapping("/formularioAtualizarFuncionario/{id}")
+	public String formularioatualizarFuncionario(FuncionarioDto dto, Model model) {
+		Funcionario funcionario = service.findById(dto);
+		model.addAttribute("funcionario", funcionario);
+		return "funcionario/formularioAtualizarFuncionario";
+	}
+	
+	@PostMapping("/atualizarFuncionario")
+	public String atualizarFuncionario(FuncionarioDto dto, Model model) {
+		service.upadate(dto);
+		return homeFuncionario(model);
+	}
+		
 }
