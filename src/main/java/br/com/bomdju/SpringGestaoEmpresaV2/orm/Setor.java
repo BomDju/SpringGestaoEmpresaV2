@@ -15,11 +15,15 @@ public class Setor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	
+	private String nomeDoSetor;
+	private boolean ativo = true;
+
 	@OneToMany(mappedBy = "setor")
-	private List <Funcionario> funcionario;
-	
+	private List<Funcionario> funcionario;
+
+	public Setor() {
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -29,13 +33,13 @@ public class Setor {
 	}
 
 	public String getNome() {
-		return nome;
+		return nomeDoSetor;
 	}
 
 	public void setNome(String nome) {
-		this.nome = nome;
+		this.nomeDoSetor = nome;
 	}
-
-	
-
+	 public boolean isAtivo() {
+		return ativo;
+	}
 }
