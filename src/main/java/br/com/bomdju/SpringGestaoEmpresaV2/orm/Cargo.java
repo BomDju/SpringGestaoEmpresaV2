@@ -17,9 +17,10 @@ public class Cargo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nomeDoCargo;
+	private boolean ativo = true;
 
 	@OneToMany(mappedBy = "cargo")
-	private List <Funcionario> funcionarios;
+	private List<Funcionario> funcionarios;
 
 	public Cargo() {
 	}
@@ -28,16 +29,24 @@ public class Cargo {
 		return id;
 	}
 
+	public String getNomeDoCargo() {
+		return nomeDoCargo;
+	}
+
+	public void setNomeDoCargo(String nomeDoCargo) {
+		this.nomeDoCargo = nomeDoCargo;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getDescricao() {
-		return nomeDoCargo;
-	}
-
-	public void setDescricao(String descricao) {
-		this.nomeDoCargo = descricao;
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }
