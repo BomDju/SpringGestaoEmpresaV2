@@ -1,8 +1,11 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.bomdju.SpringGestaoEmpresaV2.dto.CargoDto;
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 import br.com.bomdju.SpringGestaoEmpresaV2.repository.CargoRepository;
 
@@ -12,28 +15,28 @@ public class CargoService {
 	@Autowired
 	private CargoRepository cargoRepository;
 
-	// Fazer tratamento de exeçao no caso do id inserido não existir ;)
-
-	public Cargo findById(Integer id) {
-		Cargo cargo = cargoRepository.findById(id).get();
-		return cargo;
+	public List<Cargo> findAllAtivo() {
+		List<Cargo> cargos = cargoRepository.findAllAtivo();
+		return cargos;
 	}
 
-	public void deletById(Integer id) {
-		cargoRepository.deleteById(id);
+	public void deletById(CargoDto dto) {
+		Cargo cargo =  cargoRepository.findById(dto.getId()).get();
+		cargo.setAtivo(false);
+		cargoRepository.save(cargo);
 	}
 
-	public void save(String descricao) {
+	public void save(CargoDto dto ) {
 		Cargo cargo = new Cargo();
-		cargo.setDescricao(descricao);
+		cargo.setNomeDoCargo(dto.getNomeDoCargo());
 		cargoRepository.save(cargo);
 
 	}
 
-	public void upadateCargo(Integer id, String descricao) {
-		Cargo c = cargoRepository.findById(id).get();
-		c.setDescricao(descricao);
-		cargoRepository.save(c);
+	public void upadateCargo(CargoDto dto) {
+		Cargo cargo = cargoRepository.findById(dto.getId()).get();
+		cargo.setNomeDoCargo(dto.getNomeDoCargo());
+		cargoRepository.save(cargo);
 	}
 	
 }

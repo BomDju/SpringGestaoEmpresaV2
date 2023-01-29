@@ -19,7 +19,7 @@ public class Funcionario {
 	private String cpf;
 	private Double salario;
 	private LocalDate data;
-	private boolean ativo;
+	private boolean ativo = true;
 
 	@ManyToOne
 	private Cargo cargo;

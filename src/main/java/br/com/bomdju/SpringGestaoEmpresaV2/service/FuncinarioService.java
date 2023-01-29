@@ -22,15 +22,17 @@ public class FuncinarioService {
 	private SetorRepository setorRepository;
 
 	// Fazer tratamento de exeçao no caso do id inserido não existir ;)
-	//O setor e cargo estão comentados pra evitar erro, ainda n fiz o Crud do cargo nem do setor
+	//O setor e cargo estão comentados pra evitar erro, ainda não fiz o Crud do cargo nem do setor
 	
 	public Funcionario findById(FuncionarioDto dto) {
 		Funcionario funcionario = funcionarioRepository.findById(dto.getId()).get();
 		return funcionario;
 	}
 
-	public void deletById(FuncionarioDto dto) {
-		funcionarioRepository.deleteById(dto.getId());
+	public void setaAtivoFalse(FuncionarioDto dto) {
+		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
+		f.setAtivo(false);
+		funcionarioRepository.save(f);
 	}
 
 	
@@ -46,7 +48,7 @@ public class FuncinarioService {
 		return dto;
 	}
 	
-	public void upadate(FuncionarioDto dto) {
+	public void salveComBusca(FuncionarioDto dto) {
 
 		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
 
@@ -59,9 +61,9 @@ public class FuncinarioService {
 		funcionarioRepository.save(f);
 	}
 	
-	public List<Funcionario> findAllFuncionarios() {
-		List<Funcionario> funcionarios =funcionarioRepository.findAll();
+	
+	public List<Funcionario> findAllFuncionariosAtivo() {
+		List<Funcionario> funcionarios =funcionarioRepository.findAllAtivo();
 		return funcionarios;
 	}
-
 }

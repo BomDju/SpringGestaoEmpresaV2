@@ -11,8 +11,7 @@ import br.com.bomdju.SpringGestaoEmpresaV2.orm.Setor;
 @Repository
 public interface SetorRepository extends CrudRepository<Setor, Integer> {
 
-	
-	@Query(value = "SELECT * FROM Setores s WHERE s.ativo = true", nativeQuery= true )
+	@Query(value = "SELECT * FROM Setores s WHERE s.ativo = true", nativeQuery = true)
 	public List<Setor> findAllAtivo();
-	
+
 }

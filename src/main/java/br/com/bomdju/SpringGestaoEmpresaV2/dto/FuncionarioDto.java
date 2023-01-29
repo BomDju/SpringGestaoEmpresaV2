@@ -2,10 +2,6 @@ package br.com.bomdju.SpringGestaoEmpresaV2.dto;
 
 import java.time.LocalDate;
 
-import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
-import br.com.bomdju.SpringGestaoEmpresaV2.orm.Funcionario;
-import br.com.bomdju.SpringGestaoEmpresaV2.orm.Setor;
-
 public class FuncionarioDto {
 
 	private Integer id;
@@ -15,6 +11,7 @@ public class FuncionarioDto {
 	private LocalDate data;
 	private Integer cargoId;
 	private Integer setorId;
+	private boolean ativo;
 
 	public Integer getId() {
 		return id;
@@ -47,6 +44,7 @@ public class FuncionarioDto {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
 
 	public void setNomeDoFuncionario(String nomeDoFuncionario) {
 		this.nomeDoFuncionario = nomeDoFuncionario;
@@ -71,28 +69,14 @@ public class FuncionarioDto {
 	public void setSetorId(Integer setorId) {
 		this.setorId = setorId;
 	}
+	
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
 
 	public FuncionarioDto() {
 
 	}
 
-//	public FuncionarioDto(String nomeDoFuncionario, String cpf, Double salario, LocalDate data, Setor setor, Cargo cargo) {
-//		this.nomeDoFuncionario = nomeDoFuncionario;
-//		this.cpf = cpf;
-//		this.salario =  salario;
-//		this.data = data;
-//		//this.cargo = cargo;
-//		//this.setor = setor;
-//	}
-
-//	public FuncionarioDto(Funcionario funcionario) {
-//		nomeDoFuncionario = funcionario.getNomeDoFuncionario();
-//		cpf = funcionario.getCpf();
-//		salario = funcionario.getSalario();
-//		data = funcionario.getData();
-//		// cargo = funcionario.getCargo();
-//		// setor = funcionario.getSetor();
-//
-//	}
 
 }
