@@ -11,7 +11,10 @@ import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 @Repository
 public interface CargoRepository extends JpaRepository<Cargo, Integer> {
 	
-	//Talvez ele seja usado
-	public List<Cargo> findByNomeDoCargo(String nome);
+	public List<Cargo> findByNomeDoCargo(String nomeDoCargo);
+	
+//	@Query(value = "SELECT * FROM cargos c WHERE c.nome_do_cargo = :nomeDoCargo", nativeQuery = true)
+//	public List<Cargo> findNome(String nomeDoCargo);
 
 }
+	

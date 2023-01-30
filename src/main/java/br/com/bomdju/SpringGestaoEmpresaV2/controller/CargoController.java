@@ -39,15 +39,16 @@ public class CargoController {
 		return "/cargo/homeCargo";
 	}
 	
-	@PostMapping("/deletaCargo/{id}")
+	@GetMapping("/deletaCargo/{id}")
 	public String deletaCargo(CargoDto dto, Model model) {
 		service.deletById(dto);
 		return homeCargo(model); 
 	}
 	
 	@PostMapping("/buscarCargo")
-	public String buscarCargo(CargoDto dto){
-		service.buscaPorNome(dto);
+	public String buscarCargo(CargoDto dto, Model model){
+		List<Cargo> cargos = service.buscaPorNome(dto);
+		model.addAttribute("cargos", cargos);
 		return "/cargo/homeCargo";
 	}
 	
