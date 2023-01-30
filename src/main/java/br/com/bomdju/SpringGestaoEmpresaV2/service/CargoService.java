@@ -16,17 +16,15 @@ public class CargoService {
 	private CargoRepository cargoRepository;
 
 	public List<Cargo> findAllAtivo() {
-		List<Cargo> cargos = cargoRepository.findAllAtivo();
+		List<Cargo> cargos = cargoRepository.findAll();
 		return cargos;
 	}
 
 	public void deletById(CargoDto dto) {
-		Cargo cargo =  cargoRepository.findById(dto.getId()).get();
-		cargo.setAtivo(false);
-		cargoRepository.save(cargo);
+		cargoRepository.deleteById(dto.getId());
 	}
 
-	public void save(CargoDto dto ) {
+	public void save(CargoDto dto) {
 		Cargo cargo = new Cargo();
 		cargo.setNomeDoCargo(dto.getNomeDoCargo());
 		cargoRepository.save(cargo);
@@ -38,5 +36,14 @@ public class CargoService {
 		cargo.setNomeDoCargo(dto.getNomeDoCargo());
 		cargoRepository.save(cargo);
 	}
-	
+
+	public List<Cargo> buscaPorNome(CargoDto dto) {
+		List<Cargo> cargos = cargoRepository.findByNomeDoCargo(dto.getNomeDoCargo());
+		return cargos;
+
+	}
+	public Cargo findById (CargoDto dto) {
+		Cargo cargo = cargoRepository.findById(dto.getId()).get();
+		return cargo; 
+	}
 }

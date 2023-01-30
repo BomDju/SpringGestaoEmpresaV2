@@ -11,8 +11,7 @@ import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 @Repository
 public interface CargoRepository extends JpaRepository<Cargo, Integer> {
 	
-	@Query(value ="SELECT * FROM Cargos c WHERE c.ativo = true", nativeQuery = true)
-	public List<Cargo> findAllAtivo();
-
+	//Talvez ele seja usado
+	public List<Cargo> findByNomeDoCargo(String nome);
 
 }
