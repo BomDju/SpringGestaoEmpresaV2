@@ -45,7 +45,7 @@ public class FuncinarioService {
 		f.setSalario(dto.getSalario());
 		f.setData(dto.getData());
 		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
-		//f.setSetor(setorRepository.findById(dto.getSetorId()).get());
+		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
  		funcionarioRepository.save(f);
 		return dto;
 	}
@@ -59,7 +59,7 @@ public class FuncinarioService {
 		f.setSalario(dto.getSalario());
 		f.setCpf(dto.getCpf());
 		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
-		//f.setSetor(setorRepository.findById(dto.getSetorId()).get());
+		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
 		funcionarioRepository.save(f);
 	}
 	

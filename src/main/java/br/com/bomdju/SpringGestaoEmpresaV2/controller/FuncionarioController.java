@@ -36,7 +36,6 @@ public class FuncionarioController {
 	public String homeFuncionario(Model model) {
 		List<Funcionario> funcionarios = service.findAllFuncionariosAtivo();
 		model.addAttribute("funcionarios", funcionarios);
-	
 		return "funcionario/homeFuncionario";
 	}
 
@@ -71,6 +70,9 @@ public class FuncionarioController {
 		
 		List<Cargo> cargos = service.findAllCargo();
 		model.addAttribute("cargos", cargos);
+		
+		List<Setor> setores= service.findAllSetor();
+		model.addAttribute("setores", setores);
 		return "funcionario/formularioAtualizarFuncionario";
 	}
 

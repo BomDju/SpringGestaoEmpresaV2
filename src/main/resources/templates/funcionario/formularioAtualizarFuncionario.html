@@ -73,7 +73,11 @@
 
 			<div class="col-md-3">
 				<label class="form-label">Id do Setor</label> 
-				<input class="form-control" type="number" name="Setor" placeholder="Setor do funcionario">
+				<select class="form-control" name="setorId">
+					<option th:text="${funcionario.setor.nomeDoSetor}">
+					<option value="0"> - - -</option>
+					<option th:each="setor : ${setores}" th:value="${setor.id}" th:text="${setor.nomeDoSetor}"></option>
+				</select> 
 			</div>
 		
 			<input type="hidden" th:value="${funcionario.id}" name="id" >
