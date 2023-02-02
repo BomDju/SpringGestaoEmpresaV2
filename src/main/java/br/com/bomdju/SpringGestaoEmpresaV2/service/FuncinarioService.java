@@ -50,7 +50,7 @@ public class FuncinarioService {
 		return dto;
 	}
 	
-	public void salveComBusca(FuncionarioDto dto) {
+	public void update(FuncionarioDto dto) {
 
 		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
 
@@ -58,7 +58,7 @@ public class FuncinarioService {
 		f.setData(dto.getData());
 		f.setSalario(dto.getSalario());
 		f.setCpf(dto.getCpf());
-		//f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
+		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
 		//f.setSetor(setorRepository.findById(dto.getSetorId()).get());
 		funcionarioRepository.save(f);
 	}

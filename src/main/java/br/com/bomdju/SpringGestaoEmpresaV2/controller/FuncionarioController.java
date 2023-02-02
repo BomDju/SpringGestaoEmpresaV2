@@ -68,12 +68,15 @@ public class FuncionarioController {
 	public String formularioatualizarFuncionario(FuncionarioDto dto, Model model) {
 		Funcionario funcionario = service.findById(dto);
 		model.addAttribute("funcionario", funcionario);
+		
+		List<Cargo> cargos = service.findAllCargo();
+		model.addAttribute("cargos", cargos);
 		return "funcionario/formularioAtualizarFuncionario";
 	}
 
 	@PostMapping("/atualizarFuncionario")
 	public String atualizarFuncionario(FuncionarioDto dto, Model model) {
-		service.salveComBusca(dto);
+		service.update(dto);
 		return homeFuncionario(model);
 	}
 
