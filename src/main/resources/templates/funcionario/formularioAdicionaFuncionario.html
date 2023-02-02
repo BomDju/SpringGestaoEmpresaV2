@@ -72,7 +72,7 @@ input[type=number] {
 			</div>
 
 			<div class="col-md-3">
-				<label class="form-label">Id do Setor</label>
+				<label class="form-label">Setor</label>
 				<select class="form-control" name="setorId">
 					<option value="0"> - - -</option>
 					<option th:each="setor : ${setores}" th:value="${setor.id}" th:text="${setor.nomeDoSetor}"></option>
