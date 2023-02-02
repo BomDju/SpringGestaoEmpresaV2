@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.bomdju.SpringGestaoEmpresaV2.dto.FuncionarioDto;
+import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Funcionario;
+import br.com.bomdju.SpringGestaoEmpresaV2.orm.Setor;
 import br.com.bomdju.SpringGestaoEmpresaV2.service.FuncinarioService;
 
 @Controller
@@ -21,14 +23,20 @@ public class FuncionarioController {
 	private FuncinarioService service;
 
 	@GetMapping("/formularioFuncionario")
-	public String formulario() {
-		return "funcionario/formularioFuncionario";
+	public String formulario(Model model) {
+		List<Cargo> cargos = service.findAllCargo();
+		model.addAttribute("cargos", cargos);
+		
+		List<Setor> setores= service.findAllSetor();
+		model.addAttribute("setores", setores);
+		return "funcionario/formularioAdicionaFuncionario";
 	}
 
 	@GetMapping("/homeFuncionario")
 	public String homeFuncionario(Model model) {
 		List<Funcionario> funcionarios = service.findAllFuncionariosAtivo();
 		model.addAttribute("funcionarios", funcionarios);
+	
 		return "funcionario/homeFuncionario";
 	}
 
@@ -50,7 +58,7 @@ public class FuncionarioController {
 		return "funcionario/homeFuncionario";
 	}
 
-	@GetMapping(value = "/deletarFuncionario/{id}")
+	@GetMapping("/deletarFuncionario/{id}")
 	public String deletarFuncionario(FuncionarioDto dto, Model model) {
 		service.setaAtivoFalse(dto);
 		return homeFuncionario(model);

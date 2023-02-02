@@ -69,11 +69,11 @@
 
 					<tr class="align-middle" th:each="funcionario : ${funcionarios}">
 						<td scope="row" th:text="${funcionario.id}"></td>
-						<td scope="col" th:text="${funcionario.nomeDoFuncionario}">Nome</td>
+						<td scope="col" th:text="${funcionario.nomeDoFuncionario}"></td>
 						<td scope="col" th:text="${funcionario.cpf}">CPF</td>
-						<td scope="col" th:text="${funcionario.salario}">Salario</td>
+						<td scope="col" th:text="${funcionario.salario}"></td>
 						<td scope="col" th:text="${funcionario.data}"></td>
-						<td scope="col" th:text="${funcionario.Cargo}"></td>
+						<td scope="col" th:text="${funcionario.cargo.nomeDoCargo}"></td>
 						<td scope="col" th:text="${funcionario.Setor}"></td>
 						<td scope="col" th:text="${funcionario.ativo}"></td>
 						<td scope="col">
