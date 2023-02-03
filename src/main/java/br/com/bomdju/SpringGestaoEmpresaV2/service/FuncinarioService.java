@@ -24,8 +24,9 @@ public class FuncinarioService {
 	private SetorRepository setorRepository;
 
 	// Fazer tratamento de exeçao no caso do id inserido não existir ;)
-	//O setor e cargo estão comentados pra evitar erro, ainda não fiz o Crud do cargo nem do setor
-	
+	// O setor e cargo estão comentados pra evitar erro, ainda não fiz o Crud do
+	// cargo nem do setor
+
 	public Funcionario findById(FuncionarioDto dto) {
 		Funcionario funcionario = funcionarioRepository.findById(dto.getId()).get();
 		return funcionario;
@@ -37,19 +38,26 @@ public class FuncinarioService {
 		funcionarioRepository.save(f);
 	}
 
-	
-	public FuncionarioDto save (FuncionarioDto dto) {
+	public FuncionarioDto save(FuncionarioDto dto) {
 		Funcionario f = new Funcionario();
 		f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
+
+		List<Funcionario> funcionarios = funcionarioRepository.findAll();
+		for (Funcionario funcionario : funcionarios) {
+			if (funcionario.getCpf() == f.getCpf()) {
+				
+			}
+		}
+
 		f.setCpf(dto.getCpf());
 		f.setSalario(dto.getSalario());
 		f.setData(dto.getData());
 		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
 		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
- 		funcionarioRepository.save(f);
+		funcionarioRepository.save(f);
 		return dto;
 	}
-	
+
 	public void update(FuncionarioDto dto) {
 
 		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
@@ -62,19 +70,18 @@ public class FuncinarioService {
 		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
 		funcionarioRepository.save(f);
 	}
-	
-	
+
 	public List<Funcionario> findAllFuncionariosAtivo() {
-		List<Funcionario> funcionarios =funcionarioRepository.findAllAtivo();
+		List<Funcionario> funcionarios = funcionarioRepository.findAllAtivo();
 		return funcionarios;
 	}
-	
-	public List<Cargo> findAllCargo(){
+
+	public List<Cargo> findAllCargo() {
 		List<Cargo> cargos = cargoRepository.findAll();
 		return cargos;
 	}
-	
-	public List<Setor> findAllSetor(){
+
+	public List<Setor> findAllSetor() {
 		List<Setor> setores = setorRepository.findAll();
 		return setores;
 	}
