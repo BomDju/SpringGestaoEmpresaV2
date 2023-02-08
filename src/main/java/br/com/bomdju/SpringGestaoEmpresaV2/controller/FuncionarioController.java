@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Funcionario;
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Setor;
 import br.com.bomdju.SpringGestaoEmpresaV2.service.FuncinarioService;
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("funcionario")
@@ -23,11 +26,11 @@ public class FuncionarioController {
 	private FuncinarioService service;
 
 	@GetMapping("/formularioFuncionario")
-	public String formulario(Model model) {
+	public String formulario(Model model, FuncionarioDto dto) {
 		List<Cargo> cargos = service.findAllCargo();
 		model.addAttribute("cargos", cargos);
-		
-		List<Setor> setores= service.findAllSetor();
+
+		List<Setor> setores = service.findAllSetor();
 		model.addAttribute("setores", setores);
 		return "funcionario/formularioAdicionaFuncionario";
 	}
@@ -45,9 +48,13 @@ public class FuncionarioController {
 	}
 
 	@PostMapping("/cadastrarFuncionario")
-	public String cadastrarNovoFuncionario(FuncionarioDto dto, Model model) {
+	public String cadastrarNovoFuncionario(@Valid FuncionarioDto dto,  BindingResult result, Model model) {
+		if(result.hasErrors()) {
+		return formulario(model, dto);
+		}
 		service.save(dto);
 		return homeFuncionario(model);
+
 	}
 
 	@PostMapping("/buscaFuncionario")
@@ -67,11 +74,11 @@ public class FuncionarioController {
 	public String formularioatualizarFuncionario(FuncionarioDto dto, Model model) {
 		Funcionario funcionario = service.findById(dto);
 		model.addAttribute("funcionario", funcionario);
-		
+
 		List<Cargo> cargos = service.findAllCargo();
 		model.addAttribute("cargos", cargos);
-		
-		List<Setor> setores= service.findAllSetor();
+
+		List<Setor> setores = service.findAllSetor();
 		model.addAttribute("setores", setores);
 		return "funcionario/formularioAtualizarFuncionario";
 	}

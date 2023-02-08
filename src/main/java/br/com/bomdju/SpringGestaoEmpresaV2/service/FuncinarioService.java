@@ -1,5 +1,8 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,8 @@ import br.com.bomdju.SpringGestaoEmpresaV2.repository.SetorRepository;
 
 @Service
 public class FuncinarioService {
+	
+	
 
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
@@ -41,14 +46,6 @@ public class FuncinarioService {
 	public FuncionarioDto save(FuncionarioDto dto) {
 		Funcionario f = new Funcionario();
 		f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
-
-		List<Funcionario> funcionarios = funcionarioRepository.findAll();
-		for (Funcionario funcionario : funcionarios) {
-			if (funcionario.getCpf() == f.getCpf()) {
-				
-			}
-		}
-
 		f.setCpf(dto.getCpf());
 		f.setSalario(dto.getSalario());
 		f.setData(dto.getData());
