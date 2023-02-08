@@ -1,8 +1,5 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.service;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,6 +67,11 @@ public class FuncinarioService {
 
 	public List<Funcionario> findAllFuncionariosAtivo() {
 		List<Funcionario> funcionarios = funcionarioRepository.findAllAtivo();
+		return funcionarios;
+	}
+	
+	public List<Funcionario> findAllByNome(FuncionarioDto dto){
+		List<Funcionario> funcionarios = funcionarioRepository.findByNomeDoFuncionario(dto.getNomeDoFuncionario());
 		return funcionarios;
 	}
 
