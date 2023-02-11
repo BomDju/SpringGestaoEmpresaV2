@@ -24,7 +24,7 @@
 
 		<div class="container col-md-1 align-middle mt-4 pt-5">
 			<a class="bi bi-person-plus btn btn-outline-primary btn-lg"
-				href="formularioCargo"> Novo cadastro</a>
+				href="/cargo/formularioCargo"> Novo cadastro</a>
 		</div>
 
 		<div class="container col-md-11">
@@ -37,13 +37,13 @@
 							<li class="nav-item"><a class="nav-link"
 								href="/funcionario/homeFuncionario">Funcionario</a></li>
 							<li class="nav-item"><a class="nav-link active h1"
-								href="homeCargo">Cargo</a></li>
+								href="/cargo/homeCargo">Cargo</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="/setor/homeSetor">Setor</a></li>
 						</ul>
-						<form class="d-flex" role="search">
-							<input class="form-control me-2" type="search"
-								placeholder="Buscar por Id" aria-label="Search">
+						<form class="d-flex" role="search" action="/cargo/buscarCargo" method="post" >
+							<input class="form-control me-2" type="search" name="nomeDoCargo"
+								placeholder="Buscar por nome" aria-label="Search">
 							<button class="btn btn-outline-success" type="submit">Buscar</button>
 						</form>
 					</div>
@@ -59,41 +59,43 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th scope="row"><samp>1</samp></th>
-						<td scope="col">Nome</td>
+					<tr th:each="cargo : ${cargos}" >
+						<td scope="row" th:text="${cargo.id}"></td>
+						<td scope="col" th:text="${cargo.nomeDoCargo}">Nome</td>
+						
 						<td scope="col">
-							<button
+							<a th:href="@{'/cargo/formularioAtualizaCargo/' + ${cargo.id}}"
 								class="bi bi-pencil-square btn btn-outline-primary btn-sm"
-								href=""> Atualizar</button>
+								href=""> Atualizar</a>
 							<button class="bi bi-trash btn btn-outline-danger btn-sm"
 								data-bs-toggle="modal" data-bs-target="#deletModal"> Deletar</button>
+						
+							<!-- Modal -->
+							<div class="modal fade" id="deletModal" tabindex="-1"
+									aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered">
+									<div class="modal-content">
+										<div class="modal-header">
+												<h1 class="modal-title fs-5" id="exampleModalLabel">Deletar
+													funcionario?</h1>
+												<button type="button" class="btn-close" data-bs-dismiss="modal"
+													aria-label="Close"></button>
+									    </div>
+										<div class="modal-body">Você tem certeza que deseja deletar esse Cargo?</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-outline-secondary"
+												data-bs-dismiss="modal">Cancelar</button>
+											<a th:href="@{'/cargo/deletaCargo/' + ${cargo.id}}" type="button" class="btn btn-outline-danger" href="">Deletar</a>
+										</div>
+									</div>
+								</div>
+							</div>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 
-			<!-- Modal -->
-			<div class="modal fade" id="deletModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">Deletar
-								funcionario?</h1>
-							<button type="button" class="btn-close" data-bs-dismiss="modal"
-								aria-label="Close"></button>
-						</div>
-						<div class="modal-body">Você tem certeza que deseja deletar
-							esse Cargo?</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-outline-secondary"
-								data-bs-dismiss="modal">Cancelar</button>
-							<button type="button" class="btn btn-outline-danger" href="">Deletar</button>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
 	</div>
 </body>
