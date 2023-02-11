@@ -9,16 +9,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity
+@Entity(name = "Cargo")
 @Table(name = "cargos")
 public class Cargo {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String descricao;
-	
+	private String nomeDoCargo;
+
 	@OneToMany(mappedBy = "cargo")
-	private List<Funcionario> funcionarios;
+	private List <Funcionario> funcionarios;
+
+	public Cargo() {
+	}
 
 	public Integer getId() {
 		return id;
@@ -29,11 +33,11 @@ public class Cargo {
 	}
 
 	public String getDescricao() {
-		return descricao;
+		return nomeDoCargo;
 	}
 
 	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+		this.nomeDoCargo = descricao;
 	}
 
 }
