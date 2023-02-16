@@ -18,7 +18,7 @@ import br.com.bomdju.SpringGestaoEmpresaV2.service.CargoService;
 public class CargoController {
 
 	@Autowired
-	CargoService service = new CargoService();
+	private CargoService service = new CargoService();
 	
 	@GetMapping("/formularioCargo")
 	public String formularioCargo() {
