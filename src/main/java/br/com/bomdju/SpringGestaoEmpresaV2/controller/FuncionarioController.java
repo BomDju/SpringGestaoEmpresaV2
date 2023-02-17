@@ -47,13 +47,13 @@ public class FuncionarioController {
 	}
 
 	@PostMapping("/cadastrarFuncionario")
-	public String cadastrarNovoFuncionario(@Valid FuncionarioDto dto,  BindingResult result, Model model) {
-		if(result.hasErrors()) {
-		return formulario(model, dto);
+	public String cadastrarNovoFuncionario(@Valid FuncionarioDto dto, BindingResult result, Model model) {
+		if (result.hasErrors() || service.save(dto) == false) {
+			result.rejectValue("cpf", "erro.cpf", "Este cpf ja esta cadastrado");
+			return formulario(model, dto);
+		} else {
+			return homeFuncionario(model);
 		}
-		service.save(dto);
-		return homeFuncionario(model);
-
 	}
 
 	@PostMapping("/buscaFuncionario")
@@ -70,9 +70,9 @@ public class FuncionarioController {
 	}
 
 	@GetMapping("/formularioAtualizarFuncionario/{id}")
-	public String formularioatualizarFuncionario(FuncionarioDto dto, Model model) {
-		Funcionario funcionario = service.findById(dto);
-		model.addAttribute("funcionario", funcionario);
+	public String formularioAtualizarFuncionario(FuncionarioDto dto, Model model) {
+		FuncionarioDto funcionarioDto = service.findById(dto);
+		model.addAttribute("funcionario", funcionarioDto);
 
 		List<Cargo> cargos = service.findAllCargo();
 		model.addAttribute("cargos", cargos);
@@ -83,14 +83,18 @@ public class FuncionarioController {
 	}
 
 	@PostMapping("/atualizarFuncionario")
-	public String atualizarFuncionario(FuncionarioDto dto, Model model) {
-		service.update(dto);
-		return homeFuncionario(model);
+	public String atualizarFuncionario(@Valid FuncionarioDto dto, BindingResult result, Model model) {
+//		if (result.hasErrors() ) {
+//			result.rejectValue("cpf", "erro.cpf", "Este cpf ja esta cadastrado");
+//			return formularioAtualizarFuncionario(dto, model);
+//		} else {
+			return homeFuncionario(model);
+//		}
 	}
 
 	@GetMapping("/vizualizarFuncionario/{id}")
 	public String vizualizarFuncionario(FuncionarioDto dto, Model model) {
-		Funcionario funcionario = service.findById(dto);
+		FuncionarioDto funcionario = service.findById(dto);
 		model.addAttribute("funcionario", funcionario);
 		return "funcionario/vizualizarFuncionario";
 	}
