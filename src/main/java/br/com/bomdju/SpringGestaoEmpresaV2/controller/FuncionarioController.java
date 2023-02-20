@@ -84,12 +84,12 @@ public class FuncionarioController {
 
 	@PostMapping("/atualizarFuncionario")
 	public String atualizarFuncionario(@Valid FuncionarioDto dto, BindingResult result, Model model) {
-//		if (result.hasErrors() ) {
-//			result.rejectValue("cpf", "erro.cpf", "Este cpf ja esta cadastrado");
-//			return formularioAtualizarFuncionario(dto, model);
-//		} else {
+		if ( service.update(dto) == false || result.hasErrors()) {
+			result.rejectValue("cpf", "erro.cpf", "Este cpf ja esta cadastrado");
+			return formularioAtualizarFuncionario(dto, model);
+		} else {
 			return homeFuncionario(model);
-//		}
+		}
 	}
 
 	@GetMapping("/vizualizarFuncionario/{id}")

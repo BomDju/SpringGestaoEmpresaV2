@@ -55,7 +55,7 @@
 
 			<div class="col-md-6">
 				<label class="form-label">CPF</label> 
-				<input th:field="*{cpf}" required="required" type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00');">
+				<input th:field="*{cpf}" required="required" type="text" th:errorclass="is-invalid" class="form-control" onkeypress="$(this).mask('000.000.000-00');">
 				<div class="invalid-feedback">
 				  	<span th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
 				  	<span th:unless="${#fields.hasErrors('cpf')}">Insira um CPF valido</span>
@@ -84,8 +84,8 @@
 
 			<div class="col-md-3">
 				<label class="form-label">Cargo </label>
-				<select class="form-control" name="cargoId">
-					<option th:text="*{cargo.nomeDoCargo}" th:value="*{cargoId}">
+				<select class="form-control" required="required" name="cargoId">
+					<option th:text="*{cargo.nomeDoCargo}" th:value="*{cargo.id}">
 					<option disabled> - - -</option>
 					<option th:each="cargo : ${cargos}" th:value="${cargo.id}" th:text="${cargo.nomeDoCargo}"></option>
 				</select> 
@@ -94,8 +94,8 @@
 
 			<div class="col-md-3">
 				<label class="form-label">Setor</label> 
-				<select class="form-control" name="setorId">
-					<option th:text="*{setor.nomeDoSetor}" th:value="*{setorId}">
+				<select class="form-control" required="required" name="setorId">
+					<option th:text="*{setor.nomeDoSetor}" th:value="*{setor.id}">
 					<option disabled > - - -</option>
 					<option th:each="setor : ${setores}" th:value="${setor.id}" th:text="${setor.nomeDoSetor}"></option>
 				</select> 
