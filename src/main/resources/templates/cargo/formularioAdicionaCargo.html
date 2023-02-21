@@ -15,20 +15,21 @@
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 	
-<title>Novo cargo</title>
+<title>Adiciona - cargo</title>
 </head>
 <body>
 	<div class="container mt-4">
 	
-	<h3>Formulario novo cargo</h3>
+	<h3>Novo cargo</h3>
 
-		<form class="row g-3 needs-validation" novalidate="novalidate" action="/cargo/formularioAdicionaCargo" method="post">
+		<form class="row g-3 needs-validation" novalidate="novalidate" commandName="cargoDto" th:object="${cargoDto}" action="/cargo/formularioAdicionaCargo" method="post">
 
 			<div class="col-md-12">
 				<label class="form-label">Nome</label> 
-					<input class="form-control" type="text" name="nomeDoCargo" id="nomeDoCargo" required="required">
+					<input class="form-control" th:errorclass="is-invalid" th:field="*{nomeDoCargo}" required="required">
 					<div class="invalid-feedback">
-    				Insira um nome 
+    				<span th:if="${#fields.hasErrors('nomeDoCargo')}" th:errors="*{nomeDoCargo}"></span>
+					<span th:unless="${#fields.hasErrors('nomeDoCargo')}"> Insira uma nome </span>
   			   	    </div>
 			</div>
 

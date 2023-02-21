@@ -1,8 +1,12 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.dto;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CargoDto {
 
 	private Integer id;
+	
+	@NotBlank
 	private String nomeDoCargo;
 
 	public String getNomeDoCargo() {
