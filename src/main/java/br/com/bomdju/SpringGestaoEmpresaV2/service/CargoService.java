@@ -15,7 +15,7 @@ public class CargoService {
 	@Autowired
 	private CargoRepository cargoRepository;
 
-	public List<Cargo> findAllAtivo() {
+	public List<Cargo> findAll() {
 		List<Cargo> cargos = cargoRepository.findAll();
 		return cargos;
 	}
@@ -24,17 +24,38 @@ public class CargoService {
 		cargoRepository.deleteById(dto.getId());
 	}
 
-	public void save(CargoDto dto) {
+	public boolean save(CargoDto dto) {
+		List<Cargo> cargos = cargoRepository.findAll();
+		for (Cargo cargo : cargos) {
+			if (dto.getNomeDoCargo().equalsIgnoreCase(cargo.getNomeDoCargo())) {
+				return false;
+			}
+		}
 		Cargo cargo = new Cargo();
 		cargo.setNomeDoCargo(dto.getNomeDoCargo());
 		cargoRepository.save(cargo);
-
+		return true;
 	}
 
-	public void upadateCargo(CargoDto dto) {
-		Cargo cargo = cargoRepository.findById(dto.getId()).get();
-		cargo.setNomeDoCargo(dto.getNomeDoCargo());
-		cargoRepository.save(cargo);
+	public boolean upadateCargo(CargoDto dto) {
+		Cargo c = cargoRepository.findById(dto.getId()).get();
+
+		if (c.getNomeDoCargo().equalsIgnoreCase(dto.getNomeDoCargo())) {
+			c.setNomeDoCargo(dto.getNomeDoCargo());
+			cargoRepository.save(c);
+			return true;
+		} else {
+			List<Cargo> cargos = cargoRepository.findAll();
+			for (Cargo cargo : cargos) {
+				if (dto.getNomeDoCargo().equalsIgnoreCase(cargo.getNomeDoCargo())) {
+					return false;
+				}
+			}
+			c.setNomeDoCargo(dto.getNomeDoCargo());
+			cargoRepository.save(c);
+			return true;
+		}
+
 	}
 
 	public List<Cargo> buscaPorNome(CargoDto dto) {
@@ -42,8 +63,10 @@ public class CargoService {
 		return cargos;
 
 	}
-	public Cargo findById (CargoDto dto) {
+
+	public CargoDto findById(CargoDto dto) {
 		Cargo cargo = cargoRepository.findById(dto.getId()).get();
-		return cargo; 
+		dto.setNomeDoCargo(cargo.getNomeDoCargo());
+		return dto;
 	}
 }
