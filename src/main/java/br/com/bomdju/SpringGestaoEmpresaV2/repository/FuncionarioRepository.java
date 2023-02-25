@@ -16,4 +16,6 @@ public interface FuncionarioRepository extends JpaRepository<Funcionario, Intege
 	@Query(value ="SELECT * FROM funcionarios f WHERE f.ativo = true", nativeQuery = true)
 	public List<Funcionario> findAllAtivo();
 
+	@Query(value ="SELECT * FROM funcionarios f WHERE f.ativo = false", nativeQuery = true)
+	public List<Funcionario> findAllInativo();
 }
