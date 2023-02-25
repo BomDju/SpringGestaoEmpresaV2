@@ -40,6 +40,13 @@ public class FuncionarioController {
 		model.addAttribute("funcionarios", funcionarios);
 		return "funcionario/homeFuncionario";
 	}
+	
+	@GetMapping("/homeFuncionarioInativo")
+		public String homeFuncionarioInativo(Model model, Funcionario dto) {
+			List<Funcionario> funcionarios = service.findAllInativo();
+			model.addAttribute("funcionarios",funcionarios);
+			return "funcionario/homeFuncionarioInativo";
+	}
 
 	@GetMapping("/visualizarFuncionario")
 	public String vizualizarFuncionario() {
@@ -97,6 +104,12 @@ public class FuncionarioController {
 		FuncionarioDto funcionario = service.findById(dto);
 		model.addAttribute("funcionario", funcionario);
 		return "funcionario/vizualizarFuncionario";
+	}
+	
+	@GetMapping("/ativarFuncionario/{id}")
+		public String ativarFuncionario (FuncionarioDto dto, Model model ){
+		service.setFuncionarioAtivo(dto);
+		return homeFuncionario(model);
 	}
 
 }

@@ -35,6 +35,7 @@ public class FuncinarioService {
 		dto.setSalario(f.getSalario());
 		dto.setCargo(f.getCargo());
 		dto.setSetor(f.getSetor());
+		dto.setAtivo(f.isAtivo());
 
 		return dto;
 	}
@@ -99,6 +100,19 @@ public class FuncinarioService {
 	public List<Funcionario> findAllFuncionariosAtivo() {
 		List<Funcionario> funcionarios = funcionarioRepository.findAllAtivo();
 		return funcionarios;
+	}
+
+	public List<Funcionario> findAllInativo() {
+		List<Funcionario> funcionarios = funcionarioRepository.findAllInativo();
+		return funcionarios;
+	}
+	
+	public void setFuncionarioAtivo(FuncionarioDto dto) {
+		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
+		f.setAtivo(true);
+		funcionarioRepository.save(f);
+		dto.setAtivo(true);
+		
 	}
 
 	public List<Funcionario> findAllByNome(FuncionarioDto dto) {
