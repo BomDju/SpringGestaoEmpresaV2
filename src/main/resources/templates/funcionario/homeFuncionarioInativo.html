@@ -83,10 +83,6 @@
 						<td scope="col" th:text="${funcionario.ativo}"></td>
 						<td scope="col">
 						 
-						  <a
-							class="bi bi-pencil-square btn btn-outline-primary btn-sm"
-							th:href="@{'/funcionario/formularioAtualizarFuncionario/' + ${funcionario.id}}">
-							 Atualizar</a> 
 								
 						  <a class="btn btn-outline-success btn-sm bi bi-eye"
 							th:href="@{'/funcionario/vizualizarFuncionario/' + ${funcionario.id}}"
