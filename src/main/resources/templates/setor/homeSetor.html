@@ -60,15 +60,15 @@
 						<th scope="row" th:text="${setor.id}"></th>
 						<td scope="col" th:text="${setor.nomeDoSetor}"></td>
 						<td scope="col">
-							<a
-								class="bi bi-pencil-square btn btn-outline-primary btn-sm"
+							<a class="bi bi-pencil-square btn btn-outline-primary btn-sm"
 								th:href="@{'/setor/formularioAtualizaSetor/'+ ${setor.id}}"> Atualizar</a>
+								
 							<button class="bi bi-trash btn btn-outline-danger btn-sm"
-								data-bs-toggle="modal" data-bs-target="#deletModal">
+								data-bs-toggle="modal" th:attr="data-bs-target='#deletModal'+${setor.id}">
 								 Deletar</button>
 								 
 						<!-- Modal -->
-						<div class="modal fade" id="deletModal" tabindex="-1"
+						<div class="modal fade" th:id="deletModal+${setor.id}" tabindex="-1"
 							aria-labelledby="exampleModalLabel" aria-hidden="true">
 							<div class="modal-dialog modal-dialog-centered">
 								<div class="modal-content">
@@ -83,7 +83,7 @@
 									<div class="modal-footer">
 										<button type="button" class="btn btn-outline-secondary"
 											data-bs-dismiss="modal">Cancelar</button>
-										<a type="button" class="btn btn-outline-danger" th:href="@{'/setor/deletaSetor/'+ ${setor.id}}">Deletar</a>
+										<a type="button" class="btn btn-outline-danger" th:href="@{/setor/deletaSetor/{id}(id=${setor.id})}">Deletar</a>
 									</div>
 								</div>
 							</div>

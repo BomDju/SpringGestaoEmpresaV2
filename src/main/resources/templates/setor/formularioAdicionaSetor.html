@@ -12,15 +12,16 @@
 <body>
 	<div class="container mt-4">
 	
-	<h3>Formulario novo setor</h3>
+	<h3>Adiciona setor</h3>
 
-		<form class="row g-3 needs-validation" action="/setor/formularioAdicionaSetor" method="post" novalidate="novalidate">
+		<form class="row g-3 needs-validation" th:object="${setorDto}" commandName="setorDto" action="/setor/formularioAdicionaSetor" method="post" novalidate="novalidate">
 
 			<div class="col-md-12">
 				<label class="form-label">Nome</label> 
-				<input class="form-control" type="text" name="nomeDoSetor" required="required">
+				<input class="form-control" th:errorclass="is-invalid" th:field="*{nomeDoSetor}" required="required">
 				<div class="invalid-feedback">
-    				Insira um nome 
+    				<span th:if="${#fields.hasErrors('nomeDoSetor')}" th:errors="*{nomeDoSetor}"></span>
+					<span th:unless="${#fields.hasErrors('nomeDoSetor')}"> Insira uma nome </span>
   			   	</div>
 			</div>
 
