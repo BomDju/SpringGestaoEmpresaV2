@@ -45,12 +45,17 @@ public class FuncinarioService {
 		f.setAtivo(false);
 		funcionarioRepository.save(f);
 	}
-
-	public boolean save(FuncionarioDto dto) {
+	
+	public int save(FuncionarioDto dto) {
 		List<Funcionario> funcionarios = funcionarioRepository.findAll();
 		for (Funcionario funcionario : funcionarios) {
 			if (funcionario.getCpf().equalsIgnoreCase(dto.getCpf())) {
-				return false;
+				if (funcionario.isAtivo() == true) {
+					return 0;
+				} else {
+					return 2;
+				}
+
 			}
 		}
 		Funcionario f = new Funcionario();
@@ -61,7 +66,7 @@ public class FuncinarioService {
 		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
 		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
 		funcionarioRepository.save(f);
-		return true;
+		return 1;
 	}
 
 	public boolean update(FuncionarioDto dto) {
@@ -106,13 +111,19 @@ public class FuncinarioService {
 		List<Funcionario> funcionarios = funcionarioRepository.findAllInativo();
 		return funcionarios;
 	}
-	
+
 	public void setFuncionarioAtivo(FuncionarioDto dto) {
 		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
 		f.setAtivo(true);
 		funcionarioRepository.save(f);
 		dto.setAtivo(true);
-		
+
+	}
+	
+	public void setFuncinarioAtivoCpf(FuncionarioDto dto) {
+		Funcionario f = funcionarioRepository.findByCpf(dto.getCpf());
+		f.setAtivo(true);
+		funcionarioRepository.save(f);
 	}
 
 	public List<Funcionario> findAllByNome(FuncionarioDto dto) {

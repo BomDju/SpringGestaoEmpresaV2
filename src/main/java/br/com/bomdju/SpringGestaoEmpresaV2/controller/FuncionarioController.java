@@ -1,4 +1,4 @@
-package br.com.bomdju.SpringGestaoEmpresaV2.controller;
+package br.com.bomdju.SpringGestaoEmpresaV2.controller;	
 
 import java.util.List;
 
@@ -40,12 +40,12 @@ public class FuncionarioController {
 		model.addAttribute("funcionarios", funcionarios);
 		return "funcionario/homeFuncionario";
 	}
-	
+
 	@GetMapping("/homeFuncionarioInativo")
-		public String homeFuncionarioInativo(Model model, Funcionario dto) {
-			List<Funcionario> funcionarios = service.findAllInativo();
-			model.addAttribute("funcionarios",funcionarios);
-			return "funcionario/homeFuncionarioInativo";
+	public String homeFuncionarioInativo(Model model, Funcionario dto) {
+		List<Funcionario> funcionarios = service.findAllInativo();
+		model.addAttribute("funcionarios", funcionarios);
+		return "funcionario/homeFuncionarioInativo";
 	}
 
 	@GetMapping("/visualizarFuncionario")
@@ -55,12 +55,24 @@ public class FuncionarioController {
 
 	@PostMapping("/cadastrarFuncionario")
 	public String cadastrarNovoFuncionario(@Valid FuncionarioDto dto, BindingResult result, Model model) {
-		if (result.hasErrors() || service.save(dto) == false) {
+		
+		if (result.hasErrors()) {
+			return formulario(model, dto);
+		}
+		
+		switch (service.save(dto)) {
+		case 0:
 			result.rejectValue("cpf", "erro.cpf", "Este cpf ja esta cadastrado");
 			return formulario(model, dto);
-		} else {
-			return homeFuncionario(model);
+
+		case 2:
+			result.reject( "inativo","cpfInativo.err");
+			int value = 1;
+			model.addAttribute("value", value);
+			return formulario(model, dto);
+			
 		}
+		return homeFuncionario(model);
 	}
 
 	@PostMapping("/buscaFuncionario")
@@ -91,7 +103,7 @@ public class FuncionarioController {
 
 	@PostMapping("/atualizarFuncionario")
 	public String atualizarFuncionario(@Valid FuncionarioDto dto, BindingResult result, Model model) {
-		if ( service.update(dto) == false || result.hasErrors()) {
+		if (service.update(dto) == false || result.hasErrors()) {
 			result.rejectValue("cpf", "erro.cpf", "Este cpf ja esta cadastrado");
 			return formularioAtualizarFuncionario(dto, model);
 		} else {
@@ -105,10 +117,16 @@ public class FuncionarioController {
 		model.addAttribute("funcionario", funcionario);
 		return "funcionario/vizualizarFuncionario";
 	}
-	
+
 	@GetMapping("/ativarFuncionario/{id}")
-		public String ativarFuncionario (FuncionarioDto dto, Model model ){
+	public String ativarFuncionario(FuncionarioDto dto, Model model) {
 		service.setFuncionarioAtivo(dto);
+		return homeFuncionario(model);
+	}
+	
+	@GetMapping("/ativarFuncionarioCpf/{cpf}")
+	public String ativarFuncionarioCpf(FuncionarioDto dto, Model model) {
+		service.setFuncinarioAtivoCpf(dto);
 		return homeFuncionario(model);
 	}
 

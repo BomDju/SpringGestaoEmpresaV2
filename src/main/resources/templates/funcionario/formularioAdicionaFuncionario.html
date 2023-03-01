@@ -101,9 +101,31 @@
 			</div>
 
 			<div class="col-md-12">
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<button class="btn btn-primary" type="submit" >Salvar</button>
 			</div>
-		</form>
+			
+							<!-- Modal -->
+			<div class="modal fade" tabindex="-1"
+				aria-labelledby="exampleModalLabel" aria-hidden="true" id="reativarModal">
+				<div class="modal-dialog modal-dialog-centered">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h1 class="modal-title fs-5">Reativar funcionario?</h1>	
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+							<div class="modal-body">Este CPF já está cadastrado deseja reativar esse funcionario?</div>
+					   	 <div class="modal-footer">
+							<a 
+								th:href="@{/funcionario/formularioFuncionario}" 
+								type="button" class="btn btn-outline-secondary">Cancelar</a>
+							<a
+								th:href="@{'/funcionario/ativarFuncionarioCpf/' + *{cpf}}"
+								type="button" class="btn btn-outline-danger">Reativar</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 	</div>
 
 	<script>
@@ -133,6 +155,10 @@
                         });
                     });
 	
+	</script>
+	
+	<script th:inline="javascript" th:if="${value} != null ">
+	  $("#reativarModal").modal("show");
 	</script>
 
 
