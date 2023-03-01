@@ -68,25 +68,26 @@
 								class="bi bi-pencil-square btn btn-outline-primary btn-sm"
 								href=""> Atualizar</a>
 							<button class="bi bi-trash btn btn-outline-danger btn-sm"
-								data-bs-toggle="modal" data-bs-target="#deletModal"> Deletar</button>
+								data-bs-toggle="modal" th:attr="data-bs-target='#deletModal'+${cargo.id}"> Deletar</button>
 						
 							<!-- Modal -->
-							<div class="modal fade" id="deletModal" tabindex="-1"
+							<div class="modal fade" th:id="deletModal+${cargo.id}" tabindex="-1"
 									aria-labelledby="exampleModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content">
 										<div class="modal-header">
-												<h1 class="modal-title fs-5" id="exampleModalLabel">Deletar
-													funcionario?</h1>
-												<button type="button" class="btn-close" data-bs-dismiss="modal"
-													aria-label="Close"></button>
+											<h1 class="modal-title fs-5" id="exampleModalLabel">Deletar cargo?</h1>
+											<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 									    </div>
-										<div class="modal-body">Você tem certeza que deseja deletar esse Cargo?</div>
-										<div class="modal-footer">
+										
+										<div class="modal-body">Você tem certeza que deseja deletar esse cargo?</div>
+											<div class="modal-footer">
 											<button type="button" class="btn btn-outline-secondary"
 												data-bs-dismiss="modal">Cancelar</button>
-											<a th:href="@{'/cargo/deletaCargo/' + ${cargo.id}}" type="button" class="btn btn-outline-danger" href="">Deletar</a>
+											<a th:href="@{/cargo/deletaCargo/{id}(id=${cargo.id})}" type="button" class="btn btn-outline-danger" href="">Deletar</a>
 										</div>
+										
+										
 									</div>
 								</div>
 							</div>
@@ -94,8 +95,6 @@
 					</tr>
 				</tbody>
 			</table>
-
-			
 		</div>
 	</div>
 </body>
