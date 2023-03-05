@@ -15,22 +15,23 @@
 	
 	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-<title>Atualização de cargo</title>
+<title>Atualiza - cargo</title>
 </head>
 <body>
 	<div class="container mt-4">
 	
-	<h3>Formulario do Cargo</h3>
+	<h3>Atualizar Cargo</h3>
 
-		<form class="row g-3 needs-validation" novalidate="novalidate" action="/cargo/atualizarCargo" method="post" th:object="${cargo}">
+		<form class="row g-3 needs-validation" commandName="cargoDto" novalidate="novalidate" action="/cargo/atualizarCargo" method="post" th:object="${cargoDto}">
 		
 			<input type="hidden" th:value="${cargo.id}" name ="id" >
 
 			<div class="col-md-12">
 				<label class="form-label" >Nome</label> 
-				<input class="form-control" th:field="*{nomeDoCargo}" required="required" >
+				<input class="form-control" th:errorclass="is-invalid" th:field="*{nomeDoCargo}" required="required" >
 				<div class="invalid-feedback">
-    				Insira um nome 
+    			<span th:if="${#fields.hasErrors('nomeDoCargo')}" th:errors="*{nomeDoCargo}"></span>
+				<span th:unless="${#fields.hasErrors('nomeDoCargo')}"> Insira uma nome </span>
   			    </div>
 			</div>
 			
