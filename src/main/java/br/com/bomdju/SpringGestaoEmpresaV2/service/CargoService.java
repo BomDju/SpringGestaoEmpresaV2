@@ -20,8 +20,13 @@ public class CargoService {
 		return cargos;
 	}
 
-	public void deletById(CargoDto dto) {
-		cargoRepository.deleteById(dto.getId());
+	public boolean deletById(CargoDto dto) {
+		try {
+			cargoRepository.deleteById(dto.getId());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public boolean save(CargoDto dto) {

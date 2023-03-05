@@ -45,8 +45,13 @@ public class CargoController {
 	
 	@GetMapping("/deletaCargo/{id}")
 	public String deletaCargo(CargoDto dto, Model model) {
-		service.deletById(dto);
-		return homeCargo(model); 
+		if(service.deletById(dto) == false) {
+			Integer value= 1;
+			model.addAttribute("value",value);
+			return homeCargo(model);
+		} else {
+			return homeCargo(model);
+		}
 	}
 	
 	@PostMapping("/buscarCargo")

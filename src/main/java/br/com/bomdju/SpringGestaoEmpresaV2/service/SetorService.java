@@ -3,6 +3,7 @@ package br.com.bomdju.SpringGestaoEmpresaV2.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.bomdju.SpringGestaoEmpresaV2.dto.SetorDto;
@@ -20,8 +21,14 @@ public class SetorService {
 		return setores;
 	}
 
-	public void deletById(SetorDto dto) {
+	public boolean deletById(SetorDto dto) {
+		try {
 		setorRepository.deleteById(dto.getId());
+		return true;
+		} catch (DataIntegrityViolationException e) {
+			return false;
+		}
+	
 	}
 
 	public boolean save(SetorDto dto) {
