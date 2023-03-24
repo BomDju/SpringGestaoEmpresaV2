@@ -18,71 +18,107 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
     
-    
-    
-    
-   
 <title>Formulario Funcionario</title>
 
 </head>
 <body>
 
-	<style>
-        input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-  
-        input[type=number] {
-            -moz-appearance: textfield;
-        }
-    </style>
-	
 
 	<div class="container mt-4">
 	
 		<h3>Atualizar funcionario</h3>
 
-		<form class="row g-3" action="/funcionario/atualizarFuncionario" method="post">
+		<form class="row g-3 needs-validation" novalidate="novalidate" action="/funcionario/atualizarFuncionario" method="post" th:object="${funcionario}">
 		
 			<div class="col-md-12">
 				<label class="form-label">Nome</label> 
-				<input th:value="${funcionario.nomeDoFuncionario}"  class="form-control" type="text" name="nomeDoFuncionario">
+				<input th:field="*{nomeDoFuncionario}" class="form-control" required="required">
+				<div class="invalid-feedback">
+    				Insira um nome 
+  			    </div>
 			</div>
 
 			<div class="col-md-6">
 				<label class="form-label">CPF</label> 
-				<input th:value="${funcionario.cpf}" name="cpf" type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00');">
+				<input th:field="*{cpf}" required="required" type="text" class="form-control" onkeypress="$(this).mask('000.000.000-00');">
+				<div class="invalid-feedback">
+    				Insira um CPF valido
+  			    </div>
+				
 			</div>
-
+			
 			<div class="col-md-6">
 				<label class="form-label">Salario</label>
-				<input th:value="${funcionario.salario}" name="salario" type="number" class="form-control" onkeypress="$(this).mask('#.00', {reverse: true});" >
+				<input th:field="*{salario}" required="required" type="number" class="form-control" onkeypress="$(this).mask('#.00', {reverse: true});">
+				<div class="invalid-feedback">
+    				Insira um salario 
+  			    </div>
 			</div>	
+			
 
 			<div class="col-md-6">
 				<label class="form-label">Data de contratação</label> 
-				<input th:value="${funcionario.data}" class="form-control" type="date" name="data">
+				<input th:value="${funcionario.data}" required="required" class="form-control" type="date">
+				<div class="invalid-feedback">
+    				Insira uma data
+  			    </div>
+			</div>
+			
+
+			<div class="col-md-3">
+				<label class="form-label">Cargo </label>
+				<select class="form-control" name="cargoId">
+					<option th:text="*{cargo.nomeDoCargo}" th:value="*{setor.id}">
+					<option disabled> - - -</option>
+					<option th:each="cargo : ${cargos}" th:value="${cargo.id}" th:text="${cargo.nomeDoCargo}"></option>
+				</select> 
 			</div>
 
 			<div class="col-md-3">
-				<label class="form-label">Id do Cargo </label>
-		 	    <input class="form-control" type="number"
-					name="Cargo" placeholder="Cargo do funcionario">
-			</div>
-
-			<div class="col-md-3">
-				<label class="form-label">Id do Setor</label> 
-				<input class="form-control" type="number" name="Setor" placeholder="Setor do funcionario">
+				<label class="form-label">Setor</label> 
+				<select class="form-control" name="setorId">
+					<option th:text="*{setor.nomeDoSetor}" th:value="*{setor.id}">
+					<option disabled > - - -</option>
+					<option th:each="setor : ${setores}" th:value="${setor.id}" th:text="${setor.nomeDoSetor}"></option>
+				</select> 
 			</div>
 		
-			<input type="hidden" th:value="${funcionario.id}" name="id" >
+			<input type="hidden" readonly="readonly" th:value="${funcionario.id}" name="id" >
 
 			<div class="col-md-12">
 				<button class="btn btn-primary" type="submit">Salvar</button>
 			</div>
 		</form>
 	</div>
+	
+	<script>
+		(function() {
+			  const forms = document.querySelectorAll('.needs-validation')
+			  // Loop over them and prevent submission
+			  Array.from(forms).forEach(form => {
+			    form.addEventListener('submit', event => {
+			      if (!form.checkValidity()) {
+			        event.preventDefault()
+			        event.stopPropagation()
+			        
+			      }
+		
+			      form.classList.add('was-validated')
+			    }, false)
+			  })
+			})()
+			
+			
+			 $( document ).ready(function() {
+                        $( "#nomeDoFuncionario").keypress(function(e) {
+                            var key = e.keyCode;
+                            if (key >= 48 && key <= 57) {
+                                e.preventDefault();
+                            }
+                        });
+                    });
+	
+	</script>
+	
 </body>
 </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
+	
+	<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+	crossorigin="anonymous"></script>
+	
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<title>Atualização de cargo</title>
+</head>
+<body>
+	<div class="container mt-4">
+	
+	<h3>Formulario do Cargo</h3>
+
+		<form class="row g-3 needs-validation" novalidate="novalidate" action="/cargo/atualizarCargo" method="post" th:object="${cargo}">
+		
+			<input type="hidden" th:value="${cargo.id}" name ="id" >
+
+			<div class="col-md-12">
+				<label class="form-label" >Nome</label> 
+				<input class="form-control" th:field="*{nomeDoCargo}" required="required" >
+				<div class="invalid-feedback">
+    				Insira um nome 
+  			    </div>
+			</div>
+			
+
+			<div class="col-md-12">
+				<button class="btn btn-primary" type="submit">Salvar</button>
+			</div>
+		</form>
+	</div>
+	
+	<script>
+		(function() {
+			  const forms = document.querySelectorAll('.needs-validation')
+			  // Loop over them and prevent submission
+			  Array.from(forms).forEach(form => {
+			    form.addEventListener('submit', event => {
+			      if (!form.checkValidity()) {
+			        event.preventDefault()
+			        event.stopPropagation()
+			        
+			      }
+		
+			      form.classList.add('was-validated')
+			    }, false)
+			  })
+			})()
+			
+			
+			 $( document ).ready(function() {
+                        $( "#nomeDoCargo").keypress(function(e) {
+                            var key = e.keyCode;
+                            if (key >= 48 && key <= 57) {
+                                e.preventDefault();
+                            }
+                        });
+                    });
+	
+	</script> 
+</body>
+</html>

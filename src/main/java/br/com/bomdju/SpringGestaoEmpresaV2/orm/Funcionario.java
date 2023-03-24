@@ -2,7 +2,10 @@ package br.com.bomdju.SpringGestaoEmpresaV2.orm;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -18,13 +21,14 @@ public class Funcionario {
 	private String nomeDoFuncionario;
 	private String cpf;
 	private Double salario;
+	
 	private LocalDate data;
-	private boolean ativo;
+	private boolean ativo = true;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cargo cargo;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Setor setor;
 
 	public Funcionario() {
@@ -93,5 +97,13 @@ public class Funcionario {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+
+	@Override
+	public String toString() {
+		return cargo.getNomeDoCargo();
+	}
+	
+	
+	
 
 }
