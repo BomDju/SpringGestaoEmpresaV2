@@ -49,8 +49,8 @@
 			</nav>
 			<nav aria-label="breadcrumb">
 				  <ol class="breadcrumb">
-				   	<li class="breadcrumb-item active" aria-current="page">Ativos</li>
-				    <li class="breadcrumb-item"><a href="/funcionario/homeFuncionarioInativo">Inativos</a></li>
+				   	<li class="breadcrumb-item"><a href="/funcionario/homeFuncionario">Ativos</a></li>
+				    <li class="breadcrumb-item active" aria-current="page">Inativos</li>
 				  </ol>
 			</nav>
 			<table class="table table-bordered mt-2 ">
@@ -83,41 +83,38 @@
 						<td scope="col" th:text="${funcionario.ativo}"></td>
 						<td scope="col">
 						 
-						  <a
-							class="bi bi-pencil-square btn btn-outline-primary btn-sm"
-							th:href="@{'/funcionario/formularioAtualizarFuncionario/' + ${funcionario.id}}">
-							 Atualizar</a> 
 								
 						  <a class="btn btn-outline-success btn-sm bi bi-eye"
 							th:href="@{'/funcionario/vizualizarFuncionario/' + ${funcionario.id}}"
 							> Visualizar</a>
 							
-						  <a class="bi bi-trash btn btn-outline-danger btn-sm"
-							data-bs-toggle="modal" th:attr="data-bs-target='#deletModal'+${funcionario.id}"> Deletar</a>
+							 <a class="bi bi-trash btn btn-outline-danger btn-sm"
+							data-bs-toggle="modal" th:attr="data-bs-target='#reativaModal'+${funcionario.id}"> Reativar</a>
+							
 							
 							<!-- Modal -->
 							<div class="modal fade" tabindex="-1"
-								aria-labelledby="exampleModalLabel" aria-hidden="true" th:id="deletModal+${funcionario.id}">
+								aria-labelledby="exampleModalLabel" aria-hidden="true" th:id="reativaModal+${funcionario.id}">
 								<div class="modal-dialog modal-dialog-centered">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h1 class="modal-title fs-5">Deletar funcionario?</h1>	
+											<h1 class="modal-title fs-5">Reativar funcionario?</h1>	
 											<button type="button" class="btn-close"
 												data-bs-dismiss="modal" aria-label="Close"></button>
 										</div>
 										<div class="modal-body">Você tem certeza que deseja
-											deletar esse funcionario?</div>
+											reativar esse funcionario?</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-outline-secondary"
 												data-bs-dismiss="modal">Cancelar</button>
 											<a
-												th:href="@{/funcionario/deletarFuncionario/{id}(id=${funcionario.id})}"
-												 type="button" class="btn btn-outline-danger">Deletar</a>
+												th:href="@{/funcionario/ativarFuncionario/{id}(id=${funcionario.id})}"
+												 type="button" class="btn btn-outline-danger">Reativar</a>
 										</div>
 									</div>
 								</div>
 							</div>
-
+							
 						</td>
 					</tr>
 				</tbody>

@@ -2,8 +2,6 @@ package br.com.bomdju.SpringGestaoEmpresaV2.orm;
 
 import java.time.LocalDate;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;

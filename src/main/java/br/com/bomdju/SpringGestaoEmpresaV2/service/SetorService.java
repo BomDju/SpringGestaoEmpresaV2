@@ -3,6 +3,7 @@ package br.com.bomdju.SpringGestaoEmpresaV2.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.bomdju.SpringGestaoEmpresaV2.dto.SetorDto;
@@ -20,21 +21,49 @@ public class SetorService {
 		return setores;
 	}
 
-	public void deletById(SetorDto dto) {
+	public boolean deletById(SetorDto dto) {
+		try {
 		setorRepository.deleteById(dto.getId());
+		return true;
+		} catch (DataIntegrityViolationException e) {
+			return false;
+		}
+	
 	}
 
-	public void save(SetorDto dto) {
-		Setor setor = new Setor();
-		setor.setNomeDoSetor(dto.getNomeDoSetor());
-		setorRepository.save(setor);
-
+	public boolean save(SetorDto dto) {
+		List<Setor> setores = findAll();
+		for (Setor setor : setores) {
+			if (setor.getNomeDoSetor().equalsIgnoreCase(dto.getNomeDoSetor())) {
+				return false;
+			}
+		}
+		Setor s = new Setor();
+		s.setNomeDoSetor(dto.getNomeDoSetor());
+		setorRepository.save(s);
+		return true;
 	}
 
-	public void upadateSetor(SetorDto dto) {
-		Setor setor = setorRepository.findById(dto.getId()).get();
-		setor.setNomeDoSetor(dto.getNomeDoSetor());
-		setorRepository.save(setor);
+	public boolean upadateSetor(SetorDto dto) {
+		Setor s = setorRepository.findById(dto.getId()).get();
+		if(s.getNomeDoSetor().equalsIgnoreCase(dto.getNomeDoSetor())){
+			s.setNomeDoSetor(dto.getNomeDoSetor());
+			setorRepository.save(s);
+			return true;
+		}
+		else {
+			List<Setor> setores = findAll();
+			for (Setor setor: setores) {
+				if(setor.getNomeDoSetor().equals(dto.getNomeDoSetor())) {
+					return false;
+				}
+				
+			}
+			s.setNomeDoSetor(dto.getNomeDoSetor());
+			setorRepository.save(s);
+			return true;
+		}
+	
 	}
 
 	public List<Setor> buscaPorNome(SetorDto dto) {
@@ -42,8 +71,10 @@ public class SetorService {
 		return setores;
 
 	}
-	public Setor findById (SetorDto dto) {
+
+	public SetorDto findById(SetorDto dto) {
 		Setor setor = setorRepository.findById(dto.getId()).get();
-		return setor; 
+		dto.setNomeDoSetor(setor.getNomeDoSetor());
+		return dto;
 	}
 }
