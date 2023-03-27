@@ -15,8 +15,6 @@ import br.com.bomdju.SpringGestaoEmpresaV2.repository.SetorRepository;
 
 @Service
 public class FuncinarioService {
-	
-	
 
 	@Autowired
 	private FuncionarioRepository funcionarioRepository;
@@ -29,9 +27,17 @@ public class FuncinarioService {
 	// O setor e cargo estão comentados pra evitar erro, ainda não fiz o Crud do
 	// cargo nem do setor
 
-	public Funcionario findById(FuncionarioDto dto) {
-		Funcionario funcionario = funcionarioRepository.findById(dto.getId()).get();
-		return funcionario;
+	public FuncionarioDto findById(FuncionarioDto dto) {
+		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
+		dto.setNomeDoFuncionario(f.getNomeDoFuncionario());
+		dto.setCpf(f.getCpf());
+		dto.setData(f.getData());
+		dto.setSalario(f.getSalario());
+		dto.setCargo(f.getCargo());
+		dto.setSetor(f.getSetor());
+		dto.setAtivo(f.isAtivo());
+
+		return dto;
 	}
 
 	public void setaAtivoFalse(FuncionarioDto dto) {
@@ -39,8 +45,19 @@ public class FuncinarioService {
 		f.setAtivo(false);
 		funcionarioRepository.save(f);
 	}
+	
+	public int save(FuncionarioDto dto) {
+		List<Funcionario> funcionarios = funcionarioRepository.findAll();
+		for (Funcionario funcionario : funcionarios) {
+			if (funcionario.getCpf().equalsIgnoreCase(dto.getCpf())) {
+				if (funcionario.isAtivo() == true) {
+					return 0;
+				} else {
+					return 2;
+				}
 
-	public FuncionarioDto save(FuncionarioDto dto) {
+			}
+		}
 		Funcionario f = new Funcionario();
 		f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
 		f.setCpf(dto.getCpf());
@@ -49,28 +66,67 @@ public class FuncinarioService {
 		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
 		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
 		funcionarioRepository.save(f);
-		return dto;
+		return 1;
 	}
 
-	public void update(FuncionarioDto dto) {
-
+	public boolean update(FuncionarioDto dto) {
 		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
 
-		f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
-		f.setData(dto.getData());
-		f.setSalario(dto.getSalario());
-		f.setCpf(dto.getCpf());
-		f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
-		f.setSetor(setorRepository.findById(dto.getSetorId()).get());
-		funcionarioRepository.save(f);
+		if (dto.getCpf().equalsIgnoreCase(f.getCpf())) {
+
+			f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
+			f.setData(dto.getData());
+			f.setSalario(dto.getSalario());
+			f.setCpf(dto.getCpf());
+			f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
+			f.setSetor(setorRepository.findById(dto.getSetorId()).get());
+			funcionarioRepository.save(f);
+			return true;
+
+		} else {
+			List<Funcionario> funcionarios = funcionarioRepository.findAll();
+			for (Funcionario funcionario : funcionarios) {
+				if (funcionario.getCpf().equalsIgnoreCase(dto.getCpf())) {
+					return false;
+				}
+			}
+			f.setNomeDoFuncionario(dto.getNomeDoFuncionario());
+			f.setCpf(dto.getCpf());
+			f.setSalario(dto.getSalario());
+			f.setData(dto.getData());
+			f.setCargo(cargoRepository.findById(dto.getCargoId()).get());
+			f.setSetor(setorRepository.findById(dto.getSetorId()).get());
+			funcionarioRepository.save(f);
+			return true;
+		}
+
 	}
 
 	public List<Funcionario> findAllFuncionariosAtivo() {
 		List<Funcionario> funcionarios = funcionarioRepository.findAllAtivo();
 		return funcionarios;
 	}
+
+	public List<Funcionario> findAllInativo() {
+		List<Funcionario> funcionarios = funcionarioRepository.findAllInativo();
+		return funcionarios;
+	}
+
+	public void setFuncionarioAtivo(FuncionarioDto dto) {
+		Funcionario f = funcionarioRepository.findById(dto.getId()).get();
+		f.setAtivo(true);
+		funcionarioRepository.save(f);
+		dto.setAtivo(true);
+
+	}
 	
-	public List<Funcionario> findAllByNome(FuncionarioDto dto){
+	public void setFuncinarioAtivoCpf(FuncionarioDto dto) {
+		Funcionario f = funcionarioRepository.findByCpf(dto.getCpf());
+		f.setAtivo(true);
+		funcionarioRepository.save(f);
+	}
+
+	public List<Funcionario> findAllByNome(FuncionarioDto dto) {
 		List<Funcionario> funcionarios = funcionarioRepository.findByNomeDoFuncionario(dto.getNomeDoFuncionario());
 		return funcionarios;
 	}
@@ -84,4 +140,5 @@ public class FuncinarioService {
 		List<Setor> setores = setorRepository.findAll();
 		return setores;
 	}
+
 }
