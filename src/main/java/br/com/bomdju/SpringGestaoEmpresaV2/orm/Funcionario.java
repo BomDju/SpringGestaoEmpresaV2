@@ -3,6 +3,7 @@ package br.com.bomdju.SpringGestaoEmpresaV2.orm;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,17 +16,21 @@ public class Funcionario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String nomeDoFuncionario;
 	private String cpf;
 	private Double salario;
+	
 	private LocalDate data;
-	
-	@ManyToOne 
+	private boolean ativo = true;
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Cargo cargo;
-	
-	@ManyToOne
+
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Setor setor;
-	
+
+	public Funcionario() {
+	}
 
 	public Integer getId() {
 		return id;
@@ -35,12 +40,12 @@ public class Funcionario {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeDoFuncionario() {
+		return nomeDoFuncionario;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeDoFuncionario(String nomeDoFuncionario) {
+		this.nomeDoFuncionario = nomeDoFuncionario;
 	}
 
 	public String getCpf() {
@@ -66,4 +71,37 @@ public class Funcionario {
 	public void setData(LocalDate data) {
 		this.data = data;
 	}
+
+	public Cargo getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(Cargo cargo) {
+		this.cargo = cargo;
+	}
+
+	public Setor getSetor() {
+		return setor;
+	}
+
+	public void setSetor(Setor setor) {
+		this.setor = setor;
+	}
+
+	public boolean isAtivo() {
+		return ativo;
+	}
+
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
+	}
+
+	@Override
+	public String toString() {
+		return cargo.getNomeDoCargo();
+	}
+	
+	
+	
+
 }

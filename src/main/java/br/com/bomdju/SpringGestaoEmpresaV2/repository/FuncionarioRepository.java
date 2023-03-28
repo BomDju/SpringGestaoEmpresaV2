@@ -1,20 +1,23 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.repository;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
-import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Funcionario;
-import br.com.bomdju.SpringGestaoEmpresaV2.orm.Setor;
 
+@Repository
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
+
+	public List<Funcionario> findByNomeDoFuncionario(String nomeDoFuncionario);
+
+	@Query(value ="SELECT * FROM funcionarios f WHERE f.ativo = true", nativeQuery = true)
+	public List<Funcionario> findAllAtivo();
+
+	@Query(value ="SELECT * FROM funcionarios f WHERE f.ativo = false", nativeQuery = true)
+	public List<Funcionario> findAllInativo();
 	
-	@Modifying
-	@Query("UPDADE f FROM Funcionario f SET f.nome = :nome, f.cpf = :cpf, f.salario = :salario, f.data = :data, f.cargo, f.setor "
-			+ "WHRER f.id = :idFuncionario AND f.cargo.id == :idCargo AND f.setor.id == :idSetor")
-	public void updadeByid(String nome, String cpf, Double salario, LocalDate data, Cargo cargo, Setor setor,
-			Integer idFuncionario, Integer idCargo, Integer idSetor);
+	public Funcionario findByCpf(String cpf);
 }

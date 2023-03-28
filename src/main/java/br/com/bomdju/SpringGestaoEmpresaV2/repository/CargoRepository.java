@@ -1,13 +1,20 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 
-public interface CargoRepository extends JpaRepository<Cargo, Integer>{
+@Repository
+public interface CargoRepository extends JpaRepository<Cargo, Integer> {
 	
-	@Query("UPDADE c FROM Cargo c SET c.descricao = :descricao WHRER c.id = :id")
-	public void updadeByid(String nome, Integer id);
+	public List<Cargo> findByNomeDoCargo(String nomeDoCargo);
+	
+//	@Query(value = "SELECT * FROM cargos c WHERE c.nome_do_cargo = :nomeDoCargo", nativeQuery = true)
+//	public List<Cargo> findNome(String nomeDoCargo);
 
 }
+	

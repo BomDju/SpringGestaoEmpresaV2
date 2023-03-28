@@ -1,34 +1,77 @@
 package br.com.bomdju.SpringGestaoEmpresaV2.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.com.bomdju.SpringGestaoEmpresaV2.dto.CargoDto;
 import br.com.bomdju.SpringGestaoEmpresaV2.orm.Cargo;
 import br.com.bomdju.SpringGestaoEmpresaV2.repository.CargoRepository;
 
+@Service
 public class CargoService {
 
 	@Autowired
 	private CargoRepository cargoRepository;
 
-	// Fazer tratamento de exeçao no caso do id inserido não existir ;)
-
-	public Cargo findById(Integer id) {
-		Cargo cargo = cargoRepository.findById(id).get();
-		return cargo;
+	public List<Cargo> findAll() {
+		List<Cargo> cargos = cargoRepository.findAll();
+		return cargos;
 	}
 
-	public void deletById(Integer id) {
-		cargoRepository.deleteById(id);
+	public boolean deletById(CargoDto dto) {
+		try {
+			cargoRepository.deleteById(dto.getId());
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
-	public void save(String descricao) {
+	public boolean save(CargoDto dto) {
+		List<Cargo> cargos = cargoRepository.findAll();
+		for (Cargo cargo : cargos) {
+			if (dto.getNomeDoCargo().equalsIgnoreCase(cargo.getNomeDoCargo())) {
+				return false;
+			}
+		}
 		Cargo cargo = new Cargo();
-		cargo.setDescricao(descricao);
+		cargo.setNomeDoCargo(dto.getNomeDoCargo());
 		cargoRepository.save(cargo);
+		return true;
+	}
+
+	public boolean upadateCargo(CargoDto dto) {
+		Cargo c = cargoRepository.findById(dto.getId()).get();
+
+		if (c.getNomeDoCargo().equalsIgnoreCase(dto.getNomeDoCargo())) {
+			c.setNomeDoCargo(dto.getNomeDoCargo());
+			cargoRepository.save(c);
+			return true;
+		} else {
+			List<Cargo> cargos = cargoRepository.findAll();
+			for (Cargo cargo : cargos) {
+				if (dto.getNomeDoCargo().equalsIgnoreCase(cargo.getNomeDoCargo())) {
+					return false;
+				}
+			}
+			c.setNomeDoCargo(dto.getNomeDoCargo());
+			cargoRepository.save(c);
+			return true;
+		}
 
 	}
 
-	public void upadateCargo(Integer id, String descricao) {
-		cargoRepository.updadeByid(descricao, id);
+	public List<Cargo> buscaPorNome(CargoDto dto) {
+		List<Cargo> cargos = cargoRepository.findByNomeDoCargo(dto.getNomeDoCargo());
+		return cargos;
+
+	}
+
+	public CargoDto findById(CargoDto dto) {
+		Cargo cargo = cargoRepository.findById(dto.getId()).get();
+		dto.setNomeDoCargo(cargo.getNomeDoCargo());
+		return dto;
 	}
 }

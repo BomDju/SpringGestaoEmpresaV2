@@ -15,11 +15,14 @@ public class Setor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
-	
+	private String nomeDoSetor;
+
 	@OneToMany(mappedBy = "setor")
-	private List <Funcionario> funcionario;
-	
+	private List<Funcionario> funcionario;
+
+	public Setor() {
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -28,14 +31,12 @@ public class Setor {
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getNomeDoSetor() {
+		return nomeDoSetor;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setNomeDoSetor(String nomeDoSetor) {
+		this.nomeDoSetor = nomeDoSetor;
 	}
-
 	
-
 }
